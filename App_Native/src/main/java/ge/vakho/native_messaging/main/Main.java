@@ -15,14 +15,16 @@ public class Main {
 
 		// Read message
 		String requestJson = readMessage(System.in);
-
+		
 		ObjectMapper mapper = new ObjectMapper();
 		NativeRequest request = mapper.readValue(requestJson, NativeRequest.class);
 
+		// Process request...
 		NativeResponse response = new NativeResponse();
-		response.setMessage("Hello, Mr. " + request.getMessage() + ".");
+		response.setMessage("Hello, " + request.getMessage() + "!");
 
-		String responseJson = mapper.writeValueAsString(response);
+		// Send response message back
+		String responseJson = mapper.writeValueAsString(response);		
 		sendMessage(responseJson);
 
 		System.exit(0);
@@ -30,7 +32,7 @@ public class Main {
 
 	private static String readMessage(InputStream in) throws IOException {
 		byte[] b = new byte[4];
-		in.read(b);
+		in.read(b); // Read the size of message
 
 		int size = getInt(b);
 
